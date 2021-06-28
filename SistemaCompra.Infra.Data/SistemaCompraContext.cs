@@ -4,7 +4,7 @@ using SistemaCompra.Domain.Core;
 using SistemaCompra.Infra.Data.Produto;
 using ProdutoAgg = SistemaCompra.Domain.ProdutoAggregate;
 using SolicitacaoAgg = SistemaCompra.Domain.SolicitacaoCompraAggregate;
-
+using CompraAgg = SistemaCompra.Domain.SolicitacaoCompraAggregate;
 namespace SistemaCompra.Infra.Data
 {
     public class SistemaCompraContext : DbContext
@@ -13,6 +13,7 @@ namespace SistemaCompra.Infra.Data
 
         public SistemaCompraContext(DbContextOptions options) : base(options) { }
         public DbSet<ProdutoAgg.Produto> Produtos { get; set; }
+        public DbSet<CompraAgg.SolicitacaoCompra> SolicitacaoCompra { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,7 +21,8 @@ namespace SistemaCompra.Infra.Data
                 .HasData(
                     new ProdutoAgg.Produto("Produto01", "Descricao01", "Madeira", 100)
                 );
-
+            modelBuilder.Entity<CompraAgg.SolicitacaoCompra>().OwnsOne(x => x.NomeFornecedor);
+            modelBuilder.Entity<CompraAgg.SolicitacaoCompra>().OwnsOne(x => x.UsuarioSolicitante);
             modelBuilder.Ignore<Event>();
 
             modelBuilder.ApplyConfiguration(new ProdutoConfiguration());
@@ -30,7 +32,7 @@ namespace SistemaCompra.Infra.Data
         {
             optionsBuilder.UseLoggerFactory(loggerFactory)  
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(@"Server=localhost\SQLEXPRESS01;Database=SistemaCompraDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+                .UseSqlServer(@"Server=localhost\\SQLEXPRESS01;Database=SistemaCompraDb;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
     }
 }
