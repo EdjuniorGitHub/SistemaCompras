@@ -4,6 +4,7 @@ using SistemaCompra.Domain.ProdutoAggregate;
 using SistemaCompra.Domain.SolicitacaoCompraAggregate.Events;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace SistemaCompra.Domain.SolicitacaoCompraAggregate
@@ -14,6 +15,7 @@ namespace SistemaCompra.Domain.SolicitacaoCompraAggregate
         public NomeFornecedor NomeFornecedor { get; private set; }
         public IList<Item> Itens { get; private set; }
         public DateTime Data { get; private set; }
+        [NotMapped]
         public Money TotalGeral { get; private set; }
         public Situacao Situacao { get; private set; }
 
