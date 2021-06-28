@@ -15,6 +15,7 @@ namespace SistemaCompra.Domain.SolicitacaoCompraAggregate.Events
             Id = id;
             Itens = itens;
             this.TotalGeral = TotalGeral;
+            
         }
     }
 }
